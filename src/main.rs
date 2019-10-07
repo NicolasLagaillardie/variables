@@ -45,6 +45,12 @@ fn main() {
     let (s2, len) = calculate_length(s1);
 
     println!("The length of '{}' is {}.", s2, len);
+
+    let s1_reference = String::from("hello");
+
+    let len_reference = calculate_length_reference(&s1_reference);
+
+    println!("The length of '{}' is {}.", s1_reference, len_reference);
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -294,4 +300,8 @@ fn calculate_length(s: String) -> (String, usize) {
     let length = s.len(); // len() returns the length of a String
 
     (s, length)
+}
+
+fn calculate_length_reference(s: &String) -> usize {
+    s.len()
 }
