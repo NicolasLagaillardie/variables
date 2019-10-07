@@ -39,6 +39,12 @@ fn main() {
     let _s3 = takes_and_gives_back(s2);  // s2 is moved into
     // takes_and_gives_back, which also
     // moves its return value into s3
+
+    let s1 = String::from("hello");
+
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{}' is {}.", s2, len);
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -64,12 +70,6 @@ fn var(){
     // spaces = spaces.len();
 
     println!("Number of spaces: {}", spaces);
-
-    let s1 = String::from("hello");
-
-    let (s2, len) = calculate_length(s1);
-
-    println!("The length of '{}' is {}.", s2, len);
 }
 
 fn data_types(){
