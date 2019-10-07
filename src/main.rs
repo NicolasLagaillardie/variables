@@ -1,6 +1,7 @@
 fn main() {
     var();
     data_types();
+    operations():
     ask_parameter(5);
     ask_parameter_s(5,6);
     function_in_function();
@@ -65,6 +66,23 @@ fn data_types(){
     let _array = [3; 5]; // Define an array a 5 elements with value 3
     let _first = _array[0];
     let _second = _array[1];
+}
+
+fn operations() {
+    // addition
+    let sum = 5 + 10;
+
+    // subtraction
+    let difference = 95.5 - 4.3;
+
+    // multiplication
+    let product = 4 * 30;
+
+    // division
+    let quotient = 56.7 / 32.2;
+
+    // remainder
+    let remainder = 43 % 5;
 }
 
 fn ask_parameter(x: i32){
