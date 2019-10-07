@@ -1,13 +1,22 @@
 fn main() {
     var();
     data_types();
-    operations():
+    operations();
     ask_parameter(5);
     ask_parameter_s(5,6);
     function_in_function();
 
     let x = five();
     println!("The value of x is: {}", x);
+
+    let x = plus_one(5);
+    println!("The value of x is: {}", x);
+
+    if_test();
+
+    if_let();
+
+    loop_test();
 }
 
 fn var(){
@@ -70,19 +79,19 @@ fn data_types(){
 
 fn operations() {
     // addition
-    let sum = 5 + 10;
+    let _sum = 5 + 10;
 
     // subtraction
-    let difference = 95.5 - 4.3;
+    let _difference = 95.5 - 4.3;
 
     // multiplication
-    let product = 4 * 30;
+    let _product = 4 * 30;
 
     // division
-    let quotient = 56.7 / 32.2;
+    let _quotient = 56.7 / 32.2;
 
     // remainder
-    let remainder = 43 % 5;
+    let _remainder = 43 % 5;
 }
 
 fn ask_parameter(x: i32){
@@ -112,4 +121,90 @@ fn function_in_function(){
 fn five() -> i32 {
     // A function which returns an i32
     5
+}
+
+fn plus_one(x: i32) -> i32 {
+    x + 1
+    // Doesn't work
+    // x + 1;
+}
+
+fn if_test(){
+    let number = 7;
+
+    if number < 5 {
+        println!("Condition was true");
+    } else {
+        println!("Condition was false");
+    }
+
+    if number != 0 {
+        println!("Number was something other than zero");
+    }
+
+    if number % 4 == 0 {
+        println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+        println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+        println!("number is divisible by 2");
+    } else {
+        println!("number is not divisible by 4, 3, or 2");
+    }
+}
+
+fn if_let(){
+    let condition = true;
+    let number = if condition {
+        5
+    } else {
+        6
+        // Doesn't work cause not same type
+        // "six"
+    };
+
+    println!("The value of number is: {}", number);
+}
+
+fn loop_test(){
+    // Infinite loop
+    // loop{
+    //     println!("Again");
+    // }
+
+    // Loop test
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!("The result is {}", result);
+
+    // While test
+    let mut number = 3;
+
+    while number != 0 {
+        println!("{}", number);
+
+        number -= 1;
+    }
+
+    println!("LIFTOFF!!!");
+
+    // For test
+    let a  = [10, 20, 30, 40, 50];
+
+    for element in a.iter(){
+        println!("The value is: {}", element);
+    }
+
+    for number in (1..4).rev(){
+        println!("{}!", number);
+    }
+    println!("LIFTOFF!!!");
 }
