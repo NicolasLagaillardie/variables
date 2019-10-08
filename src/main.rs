@@ -82,6 +82,10 @@ fn main() {
     // Because string literals *are* string slices already,
     // this works too, without the slice syntax!
     let _word = first_word_sliced(my_string_literal);
+
+    test_struct();
+
+    rectangle();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -391,4 +395,87 @@ fn first_word_sliced(s: &str) -> &str {
     }
 
     &s[..]
+}
+
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,
+        username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+fn test_struct(){
+    let mut user1 = User {
+        email: String::from("someone@example.com"),
+        username: String::from("someusername123"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    user1.email = String::from("anotheremail@example.com");
+
+    let _user2 = User {
+        email: String::from("another@example.com"),
+        username: String::from("anotherusername567"),
+        ..user1
+    };
+
+    let _user3 = build_user(String::from("another@example.com"),
+    String::from("anotherusername567"));
+}
+
+#[derive(Debug)] // For printing the struct
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn rectangle(){
+    // Use traditional way
+    let width1 = 30;
+    let height1 = 50;
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area(width1, height1)
+    );
+
+    // Try Tuple
+    let rect1 = (30, 50);
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area_tup(rect1)
+    );
+
+    // Use struct
+    let rect2 = Rectangle { width: 30, height: 50 };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        area_struct(&rect2)
+    );
+
+    println!("rect2 is {:?}", rect2);
+}
+
+fn area(width: u32, height: u32) -> u32 {
+    width * height
+}
+
+fn area_tup(dimensions: (u32, u32)) -> u32 {
+    dimensions.0 * dimensions.1
+}
+
+fn area_struct(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
 }
