@@ -96,6 +96,12 @@ fn main() {
     value_in_cents(Coin::Penny);
 
     match_option();
+
+    if_let_improved();
+
+    define_match(Coin::Quarter(UsState::Alabama), UsState::Alabama);
+
+    define_if_let(Coin::Quarter(UsState::Alabama), UsState::Alabama);
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -647,5 +653,31 @@ fn match_option() {
         5 => println!("five"),
         7 => println!("seven"),
         _ => (), // Match any value
+    }
+}
+
+fn if_let_improved(){
+    let some_u8_value = Some(0u8);
+    if let Some(3) = some_u8_value {
+        println!("three");
+    }
+}
+
+fn define_match(coin: Coin, state: UsState){
+    // Define according to match
+    let mut count = 0;
+    match coin {
+        Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+        _ => count += 1,
+    }
+}
+
+fn define_if_let(coin: Coin, state: UsState){
+    // Define according to 'if let'
+    let mut count = 0;
+    if let Coin::Quarter(state) = coin {
+        println!("State quarter from {:?}!", state);
+    } else {
+        count += 1;
     }
 }
