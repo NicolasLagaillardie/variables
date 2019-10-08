@@ -1,3 +1,5 @@
+
+#![allow(unused_variables)]
 fn main() {
     var();
     data_types();
@@ -90,6 +92,10 @@ fn main() {
     test_methods();
 
     use_enum();
+
+    value_in_cents(Coin::Penny);
+
+    match_option();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -589,3 +595,57 @@ enum Message {
 }
 
 fn route(ip_kind: IpAddrKind) { }
+
+#[derive(Debug)] // so we can inspect the state in a minute
+enum UsState {
+    Alabama,
+    Alaska,
+    // --snip--
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => {
+            println!("Lucky penny!");
+            1
+        },
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("State quarter from {:?}!", state);
+            25
+        },
+    }
+}
+
+
+fn match_option() {
+    // Basic match option
+    fn plus_one(x: Option<i32>) -> Option<i32> {
+        match x {
+            None => None, // If removed, can't work because not exhaustive
+            Some(i) => Some(i + 1),
+        }
+    }
+
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+
+    // '_' placeholder
+    let some_u8_value = 0u8;
+    match some_u8_value {
+        1 => println!("one"),
+        3 => println!("three"),
+        5 => println!("five"),
+        7 => println!("seven"),
+        _ => (), // Match any value
+    }
+}
