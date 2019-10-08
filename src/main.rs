@@ -86,6 +86,8 @@ fn main() {
     test_struct();
 
     rectangle();
+
+    test_methods();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -439,6 +441,22 @@ struct Rectangle {
     height: u32,
 }
 
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn square(size: u32) -> Rectangle {
+        Rectangle { width: size, height: size }
+    }
+}
+
+impl Rectangle {
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+}
+
 fn rectangle(){
     // Use traditional way
     let width1 = 30;
@@ -466,6 +484,28 @@ fn rectangle(){
     );
 
     println!("rect2 is {:?}", rect2);
+
+    // Using a method
+    let rect3 = Rectangle { width: 30, height: 50 };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect3.area()
+    );
+}
+
+fn test_methods(){
+    let rect1 = Rectangle { width: 30, height: 50 };
+    let rect2 = Rectangle { width: 10, height: 40 };
+    let rect3 = Rectangle { width: 60, height: 45 };
+
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
+
+    // Associated functions
+    let sq = Rectangle::square(3);
+
+    println!("sq is a square of size {:?}", sq);
 }
 
 fn area(width: u32, height: u32) -> u32 {
