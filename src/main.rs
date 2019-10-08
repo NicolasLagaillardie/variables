@@ -51,6 +51,37 @@ fn main() {
     let len_reference = calculate_length_reference(&s1_reference);
 
     println!("The length of '{}' is {}.", s1_reference, len_reference);
+
+    let mut s = String::from("Hello");
+
+    change(&mut s);
+
+    test_mut_pointer();
+
+    let mut s = String::from("hello world");
+
+    let _word = first_word(&s); // word will get the value 5
+
+    s.clear(); // this empties the String, making it equal to ""
+
+    // word still has the value 5 here, but there's no more string that
+    // we could meaningfully use the value 5 with. word is now totally invalid!
+
+    slicing();
+
+    let my_string = String::from("hello world");
+
+    // first_word works on slices of `String`s
+    let _word = first_word_sliced(&my_string[..]);
+
+    let my_string_literal = "hello world";
+
+    // first_word works on slices of string literals
+    let _word = first_word_sliced(&my_string_literal[..]);
+
+    // Because string literals *are* string slices already,
+    // this works too, without the slice syntax!
+    let _word = first_word_sliced(my_string_literal);
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -302,6 +333,62 @@ fn calculate_length(s: String) -> (String, usize) {
     (s, length)
 }
 
-fn calculate_length_reference(s: &String) -> usize {
+fn calculate_length_reference(s: &String) -> usize { // s is a reference to a String
     s.len()
+} // Here, s goes out of scope. But because it does not have ownership of what
+// it refers to, nothing happens.
+
+fn change(some_string: &mut String){
+    some_string.push_str(", world");
+}
+
+fn test_mut_pointer(){
+    let mut s = String::from("Hello");
+
+    let r1 = &s; // No problem
+    let r2 = &s; // No problem
+    println!("{} and {}", r1,r2);
+    // r1 and r2 are no longer used after this point
+
+    let r3 = &mut s; // No problem
+    println!("{}", r3);
+}
+
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for(i, &item) in bytes.iter().enumerate(){
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+
+fn slicing(){
+    let s = String::from("Hello");
+
+    let len = s.len();
+
+    let slice = &s[3..len];
+    println!("s[3..len]: {}", slice);
+    let slice = &s[3..];
+    println!("s[3..]: {}", slice);
+    let slice = &s[0..len];
+    println!("s[0..len]: {}", slice);
+    let slice = &s[..];
+    println!("s[..]: {}", slice);
+}
+
+fn first_word_sliced(s: &str) -> &str {
+    let bytes = s.as_bytes();
+
+    for(i, &item) in bytes.iter().enumerate(){
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
 }
