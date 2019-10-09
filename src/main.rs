@@ -106,6 +106,8 @@ fn main() {
     vectors();
 
     manage_string();
+
+    manage_hash_map();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -818,4 +820,65 @@ fn manage_string(){
     for b in "नमस्ते".bytes() {
         println!("{}", b);
     }
+}
+
+use std::collections::HashMap;
+
+fn manage_hash_map(){
+
+    // Creating basic HashMap
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"),10);
+    scores.insert(String::from("Yellow"),50);
+
+    // Creating HashMap from Vectors
+    let teams  = vec![String::from("Blue"), String::from("Yellow")];
+    let initial_scores = vec![10, 50];
+
+    let scores: HashMap<_, _> = teams.iter().zip(initial_scores.iter()).collect();
+
+    // Create HashMap by inserting values
+    let field_name = String::from("Favorite color");
+    let field_value = String::from("Blue");
+
+    let mut map = HashMap::new();
+    map.insert(field_name, field_value);
+    // field_name and field_value are invalid at this point, try using them and
+    // see what compiler error you get!
+
+    // Getting the value of a HashMap
+    let team_name = String::from("Blue");
+    let score = scores.get(&team_name);
+
+    // Iterating over Key
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+
+    // Overwrite a value
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Blue"), 25);
+
+    println!("{:?}", scores);
+
+    // Only Inserting a Value If the Key Has No Value
+    scores.entry(String::from("Yellow")).or_insert(50);
+    scores.entry(String::from("Blue")).or_insert(50);
+
+    println!("{:?}", scores);
+
+    // Updating a value
+    let text = "hello world wonderful world";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{:?}", map);
 }
