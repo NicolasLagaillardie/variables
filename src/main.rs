@@ -104,6 +104,8 @@ fn main() {
     define_if_let(Coin::Quarter(UsState::Alabama), UsState::Alabama);
 
     vectors();
+
+    manage_string();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -734,9 +736,9 @@ fn vectors(){
 
     // Use enum for storing values
     let row = vec![
-        SpreadsheetCell::Int(3),
-        SpreadsheetCell::Text(String::from("Blue")),
-        SpreadsheetCell::Float(10.12),
+    SpreadsheetCell::Int(3),
+    SpreadsheetCell::Text(String::from("Blue")),
+    SpreadsheetCell::Float(10.12),
     ];
 
     // do stuff with v
@@ -746,4 +748,74 @@ enum SpreadsheetCell {
     Int(i32),
     Float(f64),
     Text(String),
+}
+
+fn manage_string(){
+    let mut s = String::new();
+
+    let data = "Initial contents";
+
+    let s = data.to_string();
+
+    // the method also works on a literal directly:
+    let s = "Initial contents".to_string();
+
+    let s = String::from("Initial contents");
+
+    // String are UTF-8
+    let hello = String::from("السلام عليكم");
+    let hello = String::from("Dobrý den");
+    let hello = String::from("Hello");
+    let hello = String::from("שָׁלוֹם");
+    let hello = String::from("नमस्ते");
+    let hello = String::from("こんにちは");
+    let hello = String::from("안녕하세요");
+    let hello = String::from("你好");
+    let hello = String::from("Olá");
+    let hello = String::from("Здравствуйте");
+    let hello = String::from("Hola");
+
+    // Update String
+    let mut s = String::from("foo");
+    s.push_str("bar");
+
+    // Concat Strings
+    let mut s1 = String::from("foo");
+    let s2 = "bar";
+    s1.push_str(s2);
+    println!("s2 is {}", s2);
+
+    // Add just one char
+    let mut s = String::from("lo");
+    s.push('l');
+
+    // Concat with +
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    let s3 = s1 + &s2; // note s1 has been moved here and can no longer be used
+    // fn add(self, s: &str) -> String {
+
+    // Concat multiple String
+    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+
+    let s = s1 + "-" + &s2 + "-" + &s3;
+
+    // Complex concat
+    let s1 = String::from("tic");
+    let s2 = String::from("tac");
+    let s3 = String::from("toe");
+
+    let s = format!("{}-{}-{}", s1, s2, s3);
+
+    // Iterating over Strings getting chars
+    for c in "नमस्ते".chars() {
+        println!("{}", c);
+    }
+
+    // Iterating over Strings getting bytes
+    for b in "नमस्ते".bytes() {
+        println!("{}", b);
+    }
 }
