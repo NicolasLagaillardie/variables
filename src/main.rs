@@ -102,6 +102,8 @@ fn main() {
     define_match(Coin::Quarter(UsState::Alabama), UsState::Alabama);
 
     define_if_let(Coin::Quarter(UsState::Alabama), UsState::Alabama);
+
+    vectors();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -680,4 +682,68 @@ fn define_if_let(coin: Coin, state: UsState){
     } else {
         count += 1;
     }
+}
+
+fn vectors(){
+    // Empty vector
+    let v: Vec<i32> = Vec::new();
+
+    // Create a non-empty vector
+    let v = vec![1, 2, 3, 4, 5];
+
+    // Create a mut vector and update it
+    let mut v_mut = Vec::new();
+
+    v_mut.push(6);
+    v_mut.push(7);
+    v_mut.push(8);
+    v_mut.push(9);
+
+    let third: &i32 = &v[2];
+    println!("The third element is {}", third);
+
+    // Doesn't work
+    // let twenty: i32 = &v[19]; // It panics
+    // let twenty = v.get(19); // It returns None
+
+    match v.get(2) {
+        Some(third) => println!("The third element is {}", third),
+        None => println!("There is no third element"),
+    }
+
+
+    let first = &v_mut[0];
+
+    // Doesn't work because v is hold
+    // v_mut.push(6);
+
+    println!("The first element is: {}", first);
+
+    // Works because v is not hold
+    v_mut.push(6);
+
+    // Iterating over the values
+    for i in &v_mut{
+        println!("{}", i);
+    }
+
+    // Increasing the values of v_mut by 50
+    for i in &mut v_mut{
+        *i += 50;
+    }
+
+    // Use enum for storing values
+    let row = vec![
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Text(String::from("Blue")),
+        SpreadsheetCell::Float(10.12),
+    ];
+
+    // do stuff with v
+} // <- v goes out of scope and is freed here
+
+enum SpreadsheetCell {
+    Int(i32),
+    Float(f64),
+    Text(String),
 }
