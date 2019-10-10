@@ -108,6 +108,8 @@ fn main() {
     manage_string();
 
     manage_hash_map();
+
+    test_crash();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -881,4 +883,15 @@ fn manage_hash_map(){
     }
 
     println!("{:?}", map);
+}
+
+
+fn test_crash(){
+    // Program will panic, return the msg and stop
+    // panic!("Crash and burn");
+
+    let v = vec![1, 2, 3];
+
+    // Will panic
+    // v[99];
 }
