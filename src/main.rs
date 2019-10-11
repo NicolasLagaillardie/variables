@@ -112,6 +112,16 @@ fn main() {
     test_crash();
 
     test_errors();
+    
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest(&number_list);
+    println!("The largest number is {}", result);
+
+    let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
+
+    let result = largest(&number_list);
+    println!("The largest number is {}", result);
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -979,4 +989,16 @@ fn read_username_from_file_dynamic() -> Result<(), Box<dyn Error>> {
     let f = File::open("hello.txt")?;
 
     Ok(())
+}
+
+fn largest(list: &[i32]) -> i32 {
+    let mut largest = list[0];
+
+    for &item in list.iter() {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
 }
