@@ -151,6 +151,8 @@ fn main() {
 
     let result = largest_general(&char_list);
     println!("The largest char is {}", result);
+
+    test_lifetime();
 } // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
 // moved, so nothing happens. s1 goes out of scope and is dropped.
 
@@ -1179,5 +1181,23 @@ impl<T: Display + PartialOrd> Pair<T>{
         } else {
             println!("The largest number is y = {}", self.y);
         }
+    }
+}
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+fn test_lifetime(){
+    let string1 = String::from("long string is long");
+
+    {
+        let string2 = String::from("xyz");
+        let result = longest(string1.as_str(), string2.as_str());
+        println!("The longest string is {}", result);
     }
 }
