@@ -954,3 +954,29 @@ fn read_username_from_file() -> Result<String, io::Error> {
         Err(e) => Err(e),
     }
 }
+
+use std::fs;
+
+fn read_username_from_file_improved() -> Result<String, io::Error> {
+    //// Slighlty improved
+    // let mut f = File::open("hello.txt")?;
+    // let mut s = String::new();
+    // f.read_to_string(&mut s)?;
+    // Ok(s)
+
+    // Chained
+    // let mut s = String::new();
+    // File::open("hello.txt")?.read_to_string(&mut s)?;
+    // Ok(s)
+
+    // Ultimately improved
+    fs::read_to_string("hello.txt")
+}
+
+use std::error::Error;
+
+fn read_username_from_file_dynamic() -> Result<(), Box<dyn Error>> {
+    let f = File::open("hello.txt")?;
+
+    Ok(())
+}
